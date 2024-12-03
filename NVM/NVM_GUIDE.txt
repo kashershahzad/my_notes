@@ -1,0 +1,39 @@
+NVM (Node Version Manager) allows you to manage and switch between multiple versions of Node.js on your system easily. Here's a step-by-step guide to installing and using NVM:
+
+For Windows:
+On Windows, use nvm-windows (a version manager designed for Windows). Follow these steps:
+
+Download the latest nvm-setup.zip from the nvm-windows GitHub releases page. https://github.com/coreybutler/nvm-windows/releases
+Extract the zip file and run the nvm-setup.exe installer.
+Follow the setup wizard to complete the installation.
+Open a new Command Prompt or PowerShell and verify the installation:
+cmd
+Copy code
+nvm version
+
+If change to Node.js version 16.20.2 using NVM on Windows, follow these steps:
+
+Step 1: Install Node.js version 16.20.2
+Open Command Prompt or PowerShell.
+
+nvm install 16.20.2
+This will download and install Node.js version 16.20.2.
+
+
+Step 2: Use Node.js version 16.20.2
+Once the installation is complete, activate the version by running:
+
+nvm use 16.20.2
+
+
+Step 3: Verify the Current Node.js Version
+To ensure you're using the correct version, run:
+
+node -v
+The output should display:
+
+v16.20.2
+
+
+If Version 16.20.2 Is Not Available
+If NVM does not find the version automatically, verify that it is listed as an available version:
