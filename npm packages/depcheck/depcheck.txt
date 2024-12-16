@@ -1,0 +1,39 @@
+To clean up unused or unnecessary packages in your project, you can follow the steps below systematically. This process will help you identify and remove unused dependencies efficiently.
+
+
+1. Use depcheck to Identify Unused Packages
+depcheck is a popular tool to scan your project and list unused dependencies.
+
+Steps:
+Install depcheck globally or locally (if not already installed):
+
+
+
+
+
+             npm install -g depcheck
+
+
+
+Run depcheck in your project directory:
+
+
+
+
+                   depcheck
+
+
+Unused dependencies: Packages listed in package.json but not used in the project.
+Missing dependencies: Packages you are using but not listed in package.json.
+
+
+
+Example output:
+Unused dependencies
+* lodash
+* moment
+
+Missing dependencies
+* react-dom
+Review the list carefully. Sometimes, depcheck might miss packages dynamically loaded or used via configuration files.
+
