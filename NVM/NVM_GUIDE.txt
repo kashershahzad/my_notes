@@ -13,7 +13,7 @@ nvm version
 
 If change to Node.js version 16.20.2 using NVM on Windows, follow these steps:
 
-Step 1: Install Node.js version 16.20.2
+Step 1: Here we Install Node.js version 16.20.2
 Open Command Prompt or PowerShell.
 
 nvm install 16.20.2
