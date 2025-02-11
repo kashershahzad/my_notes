@@ -1,0 +1,58 @@
+Prisma is an ORM (Object Relational Mapping) tool for Node.js and TypeScript that helps you interact with a database more easily and efficiently. It generates a set of tools to make database access simple and type-safe.
+
+Here’s how you can install Prisma and Prisma Client:
+
+Install Prisma CLI:
+npm install prisma --save-dev
+
+
+Install Prisma Client:
+npm install @prisma/client
+
+
+Prisma Client is the generated code that allows you to interact with your database, and Prisma CLI is used to run commands related to Prisma, like setting up and managing the database.
+Now, here are the main Prisma commands:
+
+
+prisma init
+This initializes Prisma in your project by creating the prisma folder and a schema.prisma file, where you define your database models.
+Example:
+npx prisma init
+
+
+prisma generate
+This command generates the Prisma Client based on the models defined in the schema.prisma file. It makes the Prisma Client ready to be used in your app.
+Example:
+npx prisma generate
+
+
+prisma migrate
+Used for managing database schema changes, like creating or modifying tables.
+prisma migrate dev: This command applies your schema changes to the database in the development environment.
+npx prisma migrate dev
+
+
+prisma migrate deploy: This applies migrations in production.
+npx prisma migrate deploy
+
+
+prisma db push
+Pushes your Prisma schema changes to the database directly without generating a migration file (useful in development).
+Example:
+npx prisma db push
+
+
+prisma studio
+Opens Prisma Studio, a GUI tool for interacting with your database, where you can view and modify data easily.
+Example:
+npx prisma studio
+
+
+prisma db seed
+Runs a script to populate your database with initial data (seeding).
+Example:
+npx prisma db seed
+
+
+In simple terms, Prisma helps you define your data structure in a file (schema.prisma), and then it generates code (Prisma Client) to interact with your database. With commands like prisma generate, prisma migrate, and prisma db push, you can manage your database schema and data efficiently.
+Let me know if you need more details on any of these!
