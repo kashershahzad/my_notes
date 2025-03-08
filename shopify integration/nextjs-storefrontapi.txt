@@ -1,5 +1,6 @@
 Storefront api : 
 Storefront API Shopify ki ek special API hai jo aapko GraphQL ke zariye Shopify ke store ka data lene aur manipulate karne ki permission deti hai. Is API ki madad se aap apna custom frontend (jaise Next.js website) bana sakte hain, lekin backend pe sara kaam Shopify handle karta hai — jaise products, inventory, aur payments.
+https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/products-collections/getting-started
 
 
 
