@@ -1,23 +1,23 @@
-Storefront api : 
+## Storefront api : 
 Storefront API Shopify ki ek special API hai jo aapko GraphQL ke zariye Shopify ke store ka data lene aur manipulate karne ki permission deti hai. Is API ki madad se aap apna custom frontend (jaise Next.js website) bana sakte hain, lekin backend pe sara kaam Shopify handle karta hai — jaise products, inventory, aur payments.
 https://shopify.dev/docs/storefronts/headless/building-with-the-storefront-api/products-collections/getting-started
 
 
 
-🛠 Step 1: Shopify Store Banayein : 
+## 🛠 Step 1: Shopify Store Banayein : 
 1. Shopify pe account banayein
 2. New store create karein: "Create Store" pe click karein.
 3. Products add karein: Shopify dashboard mein jaake "Products" section se apne products upload karein (images, price, description).
 
 
 
-🛠️ Step 2: Apna app create karein:
+## 🛠️ Step 2: Apna app create karein:
 1. Shopify admin panel me:
 Settings → Apps and sales channels → Develop apps → New app → Create app
 
 
 
-🔑 Step 3: API Access Key Le Lein:
+## 🔑 Step 3: API Access Key Le Lein:
 1. Shopify admin panel me:
 Settings → Apps and sales channels → Develop apps → [Your App] → Configuration
 2.Yaha ye scopes enable karein:
@@ -39,14 +39,14 @@ Install pe click karein — Shopify app ko install kar lega!
 
 
 
-🏗 Step 4: Next.js ko Shopify ke saath Connect Karein
+## 🏗 Step 4: Next.js ko Shopify ke saath Connect Karein
 .env.local file banayein: Project root folder mein ek .env.local file add karein:
 NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=yourstorename.myshopify.com
 NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_storefront_access_token
 
 
 
-Step 5 : API helper function likhein: Shopify se data fetch karne ke liye:
+## Step 5 : API helper function likhein: Shopify se data fetch karne ke liye:
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
@@ -74,7 +74,7 @@ export default Shopifyclient;
 
 
 
-🛒 Step 6: Products ko Fetch karein (GraphQL Query)
+## 🛒 Step 6: Products ko Fetch karein (GraphQL Query)
 import shopifyFetch from "@/lib/shopify.js";
 
 export async function getProducts() {
@@ -116,7 +116,7 @@ export async function getProducts() {
 
 
 
-🛍️ Step 7: Products ko Render karein
+## 🛍️ Step 7: Products ko Render karein
 
 import { getProducts } from "@/lib/shopify";
 
