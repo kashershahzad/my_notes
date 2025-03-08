@@ -1,0 +1,141 @@
+Storefront api : 
+Storefront API Shopify ki ek special API hai jo aapko GraphQL ke zariye Shopify ke store ka data lene aur manipulate karne ki permission deti hai. Is API ki madad se aap apna custom frontend (jaise Next.js website) bana sakte hain, lekin backend pe sara kaam Shopify handle karta hai — jaise products, inventory, aur payments.
+
+
+
+🛠 Step 1: Shopify Store Banayein : 
+1. Shopify pe account banayein
+2. New store create karein: "Create Store" pe click karein.
+3. Products add karein: Shopify dashboard mein jaake "Products" section se apne products upload karein (images, price, description).
+
+
+
+🛠️ Step 2: Apna app create karein:
+1. Shopify admin panel me:
+Settings → Apps and sales channels → Develop apps → New app → Create app
+
+
+
+🔑 Step 3: API Access Key Le Lein:
+1. Shopify admin panel me:
+Settings → Apps and sales channels → Develop apps → [Your App] → Configuration
+2.Yaha ye scopes enable karein:
+✅ unauthenticated_read_product_listings → Products fetch karne ke liye
+✅ unauthenticated_read_product_inventory → Inventory dekhne ke liye
+✅ unauthenticated_read_checkouts → Checkout banane ke liye
+✅ unauthenticated_read_collections → Categories ya collections ke liye
+✅ unauthenticated_write_checkouts → Checkout update karne ke liye
+
+
+
+🛠️ Step 4: App Install Karna aur Storefront Access Token Lena
+1. Left sidebar pe Settings → Apps and sales channels  → Develop apps tab pe click karein.
+3. Apni jo app banayi thi, uspe click karein.
+4. API credentials tab pe click karein.
+4. Install app button dhoondein (ye screen ke top right corner ya niche milega).
+Install pe click karein — Shopify app ko install kar lega!
+5.Token ko copy karein! (Ye sirf ek baar dikhai dega, isko secure jagah save kar lein.) 
+
+
+
+🏗 Step 4: Next.js ko Shopify ke saath Connect Karein
+.env.local file banayein: Project root folder mein ek .env.local file add karein:
+NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN=yourstorename.myshopify.com
+NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN=your_storefront_access_token
+
+
+
+Step 5 : API helper function likhein: Shopify se data fetch karne ke liye:
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  uri: `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2023-10/graphql.json`,
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers,
+      'X-Shopify-Storefront-Access-Token': process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN,
+    },
+  };
+});
+
+const Shopifyclient = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
+export default Shopifyclient;
+
+
+
+
+
+🛒 Step 6: Products ko Fetch karein (GraphQL Query)
+import shopifyFetch from "@/lib/shopify.js";
+
+export async function getProducts() {
+    const query = `
+    {
+      products(first: 10) {
+        edges {
+          node {
+            id
+            title
+            description
+            images(first: 1) {
+              edges {
+                node {
+                  src
+                  altText
+                }
+              }
+            }
+            variants(first: 1) {
+              edges {
+                node {
+                  price {
+                    amount
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    `;
+    const response = await shopifyFetch(query);
+    return response.data.products.edges;
+}
+
+
+
+
+
+🛍️ Step 7: Products ko Render karein
+
+import { getProducts } from "@/lib/shopify";
+
+export async function getServerSideProps() {
+    const products = await getProducts();
+    return { props: { products } };
+}
+
+export default function Home({ products }) {
+    return (
+        <div className="grid grid-cols-3 gap-4 p-4">
+            {products.map(({ node }) => (
+                <div key={node.id} className="border p-4">
+                    <img src={node.images.edges[0]?.node.src} alt={node.images.edges[0]?.node.altText} />
+                    <h2 className="text-lg font-bold">{node.title}</h2>
+                    <p>{node.description}</p>
+                    <p className="text-green-500">${node.variants.edges[0]?.node.price.amount}</p>
+                </div>
+            ))}
+        </div>
+    );
+}
+
